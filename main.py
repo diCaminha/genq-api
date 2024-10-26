@@ -1,7 +1,11 @@
+import json
 import os
 from dotenv import load_dotenv
 from openai import OpenAI
 from flask import Flask, request, jsonify
+
+from dtos.exam import Exam
+from utils.exam_util import format_exam_from_llm
 
 load_dotenv()
 api_key = os.getenv('API_KEY')
@@ -9,8 +13,11 @@ client = OpenAI(api_key=api_key)
 
 app = Flask(__name__)
 
+
 @app.route("/exams/generate", methods=["POST"])
 def create_exam():
+    req_data = request.get_json()
+
     completion = client.chat.completions.create(
         model="gpt-4o-mini",
         messages=[
@@ -20,51 +27,40 @@ def create_exam():
             },
             {
                 "role": "user",
-                "content": """
-                        Look at the content of the course of 
-                        this url link: https://www.alura.com.br/curso-online-spring-boot-3-desenvolva-api-rest-java.
-                        Then, generate an exam with 10 questions about the topics related to this course.
-                        The output should be in JSON format following this structure:
-                        {
-                              "title": <string>,
-                              "questions": [
-                                {
-                                  "id": <string>,
-                                  "text": <string>,
-                                  "items": [
-                                    {
-                                      "item": A,
-                                      "text": <string>,
-                                      "correct": true
-                                    },
-                                   {
-                                      "item": B,
-                                      "text": <string>,
-                                      "correct": false
-                                    },
-                                    {
-                                      "item": C,
-                                      "text": <string>,
-                                      "correct": false
-                                    },
-                                    {
-                                      "item": D,
-                                      "text": <string>,
-                                      "correct": false
-                                    }
-                                  ]
-                                }
-                              ]
-                        }
-                        Dont write nothing beyond a json with this format. The response should be only a json.
-                        """
+                "content": f"""
+                Analyze the course available at the following link: {req_data["url_course"]}. 
+                Based on the course content, generate a questionnaire in JSON format 
+                containing {req_data["number_questions"]} questions of difficulty {req_data["level"]}. The JSON should have the 
+                following structure: 
+                {{
+                    "title": "<title of the exam>",
+                    "questions": [
+                        {{
+                            "text": "<the question text>",
+                            "items": [
+                                {{ "item": "A", "text": "<item description>", "correct": <true or false> }},
+                                {{ "item": "B", "text": "<item description>", "correct": <true or false> }},
+                                {{ "item": "C", "text": "<item description>", "correct": <true or false> }},
+                                {{ "item": "D", "text": "<item description>", "correct": <true or false> }}
+                            ]
+                        }}
+                    ]
+                }}
+                Return ONLY this JSON format with {req_data["number_questions"]} questions."""
             }
         ]
     )
 
-    # Extract the content from the response properly
-    response_content = completion.choices[0].message.content
-    return jsonify(response_content)
+    response_content = format_exam_from_llm(completion.choices[0].message.content)
+
+    try:
+        response_dict = json.loads(response_content.strip())  # Parse JSON string into a dictionary
+        exam = Exam.from_json(response_dict)
+        return jsonify(exam.to_dict())
+
+    except json.JSONDecodeError as e:
+        return jsonify({"error": "Invalid data format by LLM", "message": str(e)}), 500
+
 
 if __name__ == "__main__":
     app.run()
