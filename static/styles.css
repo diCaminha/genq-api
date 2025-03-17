@@ -1,0 +1,118 @@
+/* Use a modern, clean font */
+body {
+    font-family: 'Roboto', sans-serif;
+    background: #f5f6fa;
+    margin: 0;
+    padding: 0;
+    color: #333;
+  }
+  
+  header {
+    background-color: #4a90e2;
+    color: white;
+    padding: 1rem;
+    text-align: center;
+  }
+  
+  main {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+  }
+  
+  .form-section, #examSection {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+    margin-bottom: 2rem;
+  }
+  
+  .form-group {
+    margin-bottom: 1rem;
+  }
+  
+  .form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+  }
+  
+  .form-group input,
+  .form-group select {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .btn {
+    background-color: #4a90e2;
+    color: white;
+    border: none;
+    padding: 0.7rem 1.2rem;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1rem;
+    margin-top: 1rem;
+  }
+  
+  .btn:hover {
+    background-color: #407ac1;
+  }
+  
+  .btn.secondary {
+    background-color: #ccc;
+    color: #333;
+    margin-left: 1rem;
+  }
+  
+  .hidden {
+    display: none;
+  }
+  
+  /* Exam question card styles */
+  .question-card {
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+    background: #fafafa;
+  }
+  
+  .question-card h3 {
+    margin-top: 0;
+  }
+  
+  .option {
+    margin: 0.5rem 0;
+    display: flex;
+    align-items: center;
+  }
+  
+  .option input {
+    margin-right: 0.5rem;
+  }
+  
+  .correct {
+    border: 2px solid #4caf50;
+    border-radius: 4px;
+    padding: 0.5rem;
+    background: #e8f5e9;
+  }
+  
+  .incorrect {
+    border: 2px solid #f44336;
+    border-radius: 4px;
+    padding: 0.5rem;
+    background: #ffebee;
+  }
+  
+  .result {
+    font-size: 1.2rem;
+    font-weight: 500;
+    margin-top: 1rem;
+    padding: 1rem;
+    text-align: center;
+  }
+  

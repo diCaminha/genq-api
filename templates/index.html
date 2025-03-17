@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Exam Generator</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" />
+  <!-- Optional: include a Google Font for a modern look -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header>
+    <h1>Exam Generator</h1>
+  </header>
+
+  <main>
+    <section class="form-section">
+      <h2>Generate an Exam</h2>
+      <form id="examForm">
+        <div class="form-group">
+          <label for="url_course">Course URL:</label>
+          <input type="url" id="url_course" name="url_course" placeholder="https://example.com/course" required />
+        </div>
+        <div class="form-group">
+          <label for="number_questions">Number of Questions:</label>
+          <input type="number" id="number_questions" name="number_questions" min="1" max="50" value="5" required />
+        </div>
+        <div class="form-group">
+          <label for="level">Difficulty Level:</label>
+          <select id="level" name="level" required>
+            <option value="easy">Easy</option>
+            <option value="medium" selected>Medium</option>
+            <option value="hard">Hard</option>
+          </select>
+        </div>
+        <button type="submit" class="btn">Generate Exam</button>
+      </form>
+      <div id="loading" class="hidden">Generating exam, please wait...</div>
+    </section>
+
+    <section id="examSection" class="hidden">
+      <h2 id="examTitle"></h2>
+      <form id="examContainer">
+        <!-- Questions will be injected here -->
+      </form>
+      <button id="submitExam" class="btn">Submit Answers</button>
+      <button id="resetExam" class="btn secondary">Reset Exam</button>
+      <div id="result" class="result hidden"></div>
+    </section>
+  </main>
+
+  <script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>

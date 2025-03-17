@@ -1,8 +1,8 @@
 import json
 import os
 from dotenv import load_dotenv
+from flask import Flask, request, jsonify, render_template
 from openai import OpenAI
-from flask import Flask, request, jsonify
 
 from dtos.exam import Exam
 from utils.exam_util import format_exam_from_llm
@@ -13,6 +13,10 @@ client = OpenAI(api_key=api_key)
 
 app = Flask(__name__)
 
+# Route to serve the frontend
+@app.route("/")
+def index():
+    return render_template("index.html")
 
 @app.route("/exams/generate", methods=["POST"])
 def create_exam():
@@ -54,13 +58,12 @@ def create_exam():
     response_content = format_exam_from_llm(completion.choices[0].message.content)
 
     try:
-        response_dict = json.loads(response_content.strip())  # Parse JSON string into a dictionary
+        response_dict = json.loads(response_content.strip())
         exam = Exam.from_json(response_dict)
         return jsonify(exam.to_dict())
 
     except json.JSONDecodeError as e:
         return jsonify({"error": "Invalid data format by LLM", "message": str(e)}), 500
-
 
 if __name__ == "__main__":
     app.run()
