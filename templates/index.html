@@ -15,6 +15,7 @@
   </header>
 
   <main>
+    <!-- Exam Generation Form -->
     <section class="form-section">
       <h2>Generate an Exam</h2>
       <form id="examForm">
@@ -36,14 +37,21 @@
         </div>
         <button type="submit" class="btn">Generate Exam</button>
       </form>
-      <div id="loading" class="hidden">Generating exam, please wait...</div>
     </section>
 
+    <!-- Loading Overlay -->
+    <div id="loading" class="hidden">Generating exam, please wait...</div>
+
+    <!-- Exam Display Section -->
     <section id="examSection" class="hidden">
-      <h2 id="examTitle"></h2>
-      <form id="examContainer">
-        <!-- Questions will be injected here -->
-      </form>
+      <!-- Info Panel -->
+      <div id="examInfo" class="info-panel"></div>
+      <!-- Exam Questions -->
+      <div id="examQuestions">
+        <form id="examContainer">
+          <!-- Questions will be injected here -->
+        </form>
+      </div>
       <button id="submitExam" class="btn">Submit Answers</button>
       <button id="resetExam" class="btn secondary">Reset Exam</button>
       <div id="result" class="result hidden"></div>
