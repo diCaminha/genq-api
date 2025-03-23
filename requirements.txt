@@ -9,3 +9,4 @@ langchain-community[web]
 firecrawl-py
 selenium>=4.4.3
 requests>=2.28.1
+gunicorn
