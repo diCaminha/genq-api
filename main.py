@@ -7,7 +7,6 @@ from openai import OpenAI
 from dtos.exam import Exam
 from utils.exam_util import format_exam_from_llm
 
-from web_loader import CourseWebLoader
 from web_scrap import extract_text_with_requests
 
 load_dotenv()
@@ -27,7 +26,7 @@ def create_exam():
     url = req_data["url_course"]
     
     content = extract_text_with_requests(url)
-    print(f"content: {content}")
+    #print(f"content: {content}")
     
     get_topics_completions = client.chat.completions.create(
         model="gpt-4o",
