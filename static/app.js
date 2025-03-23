@@ -10,21 +10,17 @@ document.addEventListener("DOMContentLoaded", () => {
   const resultDiv = document.getElementById("result");
 
   let examData = null;
-  let formPayload = null; // Store form input data for use in the info panel
+  let formPayload = null;
 
-  // Ensure the loading overlay is hidden when the page first loads.
   loadingDiv.style.display = "none";
 
-  // Form submit: generate exam via API
   examForm.addEventListener("submit", async (e) => {
     e.preventDefault();
-    // Hide any previous exam/results
     examSection.classList.add("hidden");
     resultDiv.classList.add("hidden");
     examContainer.innerHTML = "";
     examInfoPanel.innerHTML = "";
     
-    // Show loading overlay
     loadingDiv.style.display = "flex";
 
     const formData = new FormData(examForm);
@@ -90,7 +86,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const input = document.createElement("input");
         input.type = "radio";
         input.name = `question-${qIndex}`;
-        input.value = option.item; // e.g., "A", "B", etc.
+        input.value = option.item;
 
         const label = document.createElement("label");
         label.textContent = `${option.item}: ${option.text}`;

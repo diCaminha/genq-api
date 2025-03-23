@@ -3,3 +3,9 @@ python-dotenv
 flask
 flask-smorest
 flask-cors
+langchain_community
+beautifulsoup4>=4.12.2
+langchain-community[web]
+firecrawl-py
+selenium>=4.4.3
+requests>=2.28.1
